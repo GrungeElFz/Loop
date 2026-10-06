@@ -74,17 +74,17 @@ Loop is a high-performance, offline-first Progressive Web App (PWA) prioritizing
 
 ### 1. The Technology Stack
 
-- **Frontend Shell**: `SvelteKit` _(SPA / Hybrid routing)_ for persistent cryptographic state, service-worker lifecycle management, and WebSocket connections.
+- **Frontend Shell**: [`SvelteKit`](https://github.com/sveltejs/svelte) _(SPA / Hybrid routing)_ for persistent cryptographic state, service-worker lifecycle management, and WebSocket connections.
 
-- **UI Primitives**: `Shadcn-Svelte` for minimal bundle sizes and accessible, unstyled components.
+- **UI Primitives**: [`Shadcn-Svelte`](https://github.com/huntabyte/shadcn-svelte) for minimal bundle sizes and accessible, unstyled components.
 
-- **Public Routing**: `Astro`, utilized strictly for zero-JS marketing pages and ephemeral decryption endpoints.
+- **Public Routing**: [`Astro`](https://github.com/withastro/astro), utilized strictly for zero-JS marketing pages and ephemeral decryption endpoints.
 
-- **Backend as a Service**: `Supabase` providing `PostgreSQL`, Authentication, and Realtime WebSockets.
+- **Backend as a Service**: [`Supabase`](https://github.com/supabase/supabase) providing [`PostgreSQL`](https://github.com/postgres/postgres), Authentication, and Realtime WebSockets.
 
-- **Database ORM**: `Drizzle ORM` for lightweight, highly performant, and type-safe schema management.
+- **Database ORM**: [`Drizzle ORM`](https://github.com/drizzle-team/drizzle-orm) for lightweight, highly performant, and type-safe schema management.
 
-- **Offline Engine**: `Dexie.JS` for local-first data caching and optimistic UI updates.
+- **Offline Engine**: [`Dexie.JS`](https://github.com/dexie/Dexie.js) for local-first data caching and optimistic UI updates.
 
 <br>
 
