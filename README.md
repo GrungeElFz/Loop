@@ -63,3 +63,60 @@ Privacy isn't a setting; it's the foundation of the app.
 - **Safe with me**: A locked folder for your most sensitive items — like surprise gift planning or private journal entries — that requires Face ID, Touch ID, or a PIN to open.
 
 - **Secure Guest Links**: Need to send your _Emergency Protocol_ to a caregiver or babysitter? You can generate a temporary, secure link that self-destructs when you choose.
+
+<br>
+
+## For Developer
+
+Loop is a high-performance, offline-first Progressive Web App (PWA) prioritizing data sovereignty and strict cryptographic privacy. Built on a Zero-Knowledge Architecture (ZKA), it provides a single-player utility dashboard that seamlessly scales into a multi-tenant, end-to-end encrypted messaging and close-collaboration platform.
+
+<br>
+
+### 1. The Technology Stack
+
+- **Frontend Shell**: `SvelteKit` _(SPA / Hybrid routing)_ for persistent cryptographic state, service-worker lifecycle management, and WebSocket connections.
+
+- **UI Primitives**: `Shadcn-Svelte` for minimal bundle sizes and accessible, unstyled components.
+
+- **Public Routing**: `Astro`, utilized strictly for zero-JS marketing pages and ephemeral decryption endpoints.
+
+- **Backend as a Service**: `Supabase` providing `PostgreSQL`, Authentication, and Realtime WebSockets.
+
+- **Database ORM**: `Drizzle ORM` for lightweight, highly performant, and type-safe schema management.
+
+- **Offline Engine**: `Dexie.JS` for local-first data caching and optimistic UI updates.
+
+<br>
+
+### 2. Security & Cryptography Architecture
+
+- **Zero-Knowledge E2EE**: Powered by the browser's native Web Crypto API. Chat messages, daily notes, and vault items are encrypted client-side (AES-256-GCM) before transmission.
+
+- **ECDH Key Exchange**: Connections establish shared symmetric keys via _Elliptic Curve Diffie-Hellman_, secured by a Key Encryption Key (KEK) derived from the user's master password.
+
+- **URL Hash Decryption**: Public sharing links _(e.g., Caregiver exports)_ pass the decryption key strictly in the URL hash fragment `[domain.com/share#key=123](https://domain.com/share#key=123)`. Browsers do not send fragments to the server, ensuring the server delivers the encrypted payload blindly.
+
+- **WebAuthn Integration**: The _Safe with me_ vault utilizes device-level biometrics (Face ID/Touch ID) to authorize the decryption of highly sensitive local data.
+
+<br>
+
+### 3. Data Flow & State Management
+
+- **Hybrid Storage Model**: To maintain _ProMotion_ UI performance, heavy spatial/relational data _(e.g., map coordinates, timestamps, media buckets)_ are secured via PostgreSQL Row-Level Security (RLS), while sensitive textual/personal data uses strict E2EE.
+
+- **The Tri-State Database Model**: To avoid sync conflicts, relationship data is siloed into three distinct PostgreSQL spaces
+  - `[User A]` isolated database
+  - `[User B]` isolated database
+  - `[AB]` shared database.
+
+- **Optimistic UI & Background Sync**: Read/write operations execute against the local `Dexie.JS` IndexedDB instance first. A Service Worker queues network requests and silently syncs ciphertext to Supabase in the background, ensuring zero UI blocking even on poor connections.
+
+<br>
+
+### 4. Technical Feature Highlights
+
+- **Polymorphic Components**: A unified Svelte's `<CollectionBoard/>` dynamically renders food, music, and clothing lists, preventing codebase bloat and ensuring high reusability.
+
+- **Smart Chat Action Drawer**: Replaces complex slash commands with a mobile-optimized bottom sheet. Links dropped into chat are unfurled via stateless, privacy-preserving Edge Functions that strip identifying client headers.
+
+- **WebRTC Ready**: The architecture is prepped for peer-to-peer video calls for future phases, utilizing Supabase Realtime purely as a signaling server to introduce devices via STUN/TURN, bypassing central media servers entirely.
